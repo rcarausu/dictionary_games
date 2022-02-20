@@ -4,7 +4,7 @@ This repository contains different implementations of popular word based games i
 
 ## Current implementations
 
-### _**HexWords**_
+### _**HexLetters**_
 
 Game clone of NY Times' [Spelling Bee](https://www.nytimes.com/puzzles/spelling-bee) and [Paraulògic](https://vilaweb.cat/paraulogic/).
   + Languages available: 

@@ -1,7 +1,7 @@
 package dictionary;
 
 import domain.DictionaryEntry;
-import domain.exceptions.EntryNotFoundEror;
+import domain.exceptions.EntryNotFoundError;
 import domain.exceptions.ParsingError;
 import lombok.Getter;
 
@@ -31,10 +31,10 @@ public class Dictionary {
         return entries.stream().anyMatch(e -> e.getWord().equals(word));
     }
 
-    public DictionaryEntry getEntry(String word) throws EntryNotFoundEror {
+    public DictionaryEntry getEntry(String word) throws EntryNotFoundError {
         return entries.stream()
                 .filter(e -> e.getWord().equals(word))
                 .findFirst()
-                .orElseThrow(() -> new EntryNotFoundEror(format("Word %s not found in %s dictionary", word, locale)));
+                .orElseThrow(() -> new EntryNotFoundError(format("Word %s not found in %s dictionary", word, locale)));
     }
 }

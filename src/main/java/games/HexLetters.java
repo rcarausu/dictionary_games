@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.String.format;
 import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
@@ -35,7 +36,7 @@ public class HexLetters implements GameCreator {
         allLetters.add(mainLetter);
 
         List<DictionaryEntry> entries = dictionary.getEntries();
-        return allLetters.stream()
+        List<String> solutions = allLetters.stream()
                 .map(letter -> entries.stream()
                         .map(DictionaryEntry::getWord)
                         .sorted()
@@ -55,6 +56,9 @@ public class HexLetters implements GameCreator {
                 .distinct()
                 .collect(toList());
 
+        log.info("Found {} solutions", solutions.size());
+
+        return solutions;
     }
 
     private List<Character> chooseLetters(String origin, int total) {
@@ -72,7 +76,11 @@ public class HexLetters implements GameCreator {
 
         int mainLetterIndex = new Random().nextInt(letters.size());
         char mainLetter = letters.get(mainLetterIndex);
+
         letters.remove(mainLetterIndex);
+
+        log.info(format("Creating HexLetters game with main letter '%s' and letters '%s'", mainLetter, letters));
+
         return new HexLettersGame(mainLetter, letters, generateSolutions(mainLetter, letters));
     }
 

@@ -1,2 +1,2 @@
 dictionaryPaths:
-  en_US: "src/main/resources/en_us_dictionary.json"
+  en_US: "src/main/resources/dictionaries/en_us_dictionary.json"

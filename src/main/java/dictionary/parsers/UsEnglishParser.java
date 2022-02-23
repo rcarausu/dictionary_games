@@ -21,11 +21,10 @@ import static java.util.stream.Collectors.toList;
 public class UsEnglishParser implements LocaleParser {
 
     private final ObjectMapper objectMapper;
-//    private final String dictionaryPath;
 
     private static final String VOWELS = "aeiou";
     private static final String CONSONANTS = "bcdfghjklmnpqrstvwxyz";
-    private static final String DICTIONARY_PATH = "src/main/resources/en_us_dictionary.json";
+    private static final String DICTIONARY_PATH = "src/main/resources/dictionaries/en_us_dictionary.json";
 
     @Override
     public List<DictionaryEntry> parseEntries() throws ParsingError {

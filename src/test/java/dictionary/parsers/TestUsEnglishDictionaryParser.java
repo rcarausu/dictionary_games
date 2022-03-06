@@ -33,6 +33,8 @@ class TestUsEnglishDictionaryParser {
         // then
         assertThat(entries.size()).isEqualTo(50);
         assertThat(entries.get(0)).isEqualTo(new DictionaryEntry("entry_name", "entry definitions"));
+        assertThat(parser.getConsonants()).isEqualTo("bcdfghjklmnpqrstvwxyz");
+        assertThat(parser.getVowels()).isEqualTo("aeiou");
     }
 
     @Test

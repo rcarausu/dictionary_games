@@ -9,6 +9,7 @@ import lombok.Getter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static java.util.List.of;
 import static java.util.Locale.US;
@@ -26,13 +27,15 @@ public class DictionaryParser {
 
     private final ObjectMapper objectMapper;
     private final LocaleParser parser;
+    private final Map<Locale, String> dictionaryPaths;
 
 
     private final static List<Locale> AVAILABLE_LOCALES = of(US);
 
-    public DictionaryParser(ObjectMapper objectMapper, Locale locale) throws ParsingError {
-        this.locale = locale;
+    public DictionaryParser(ObjectMapper objectMapper, Locale locale, Map<Locale, String> dictionaryPaths) throws ParsingError {
         this.objectMapper = objectMapper;
+        this.locale = locale;
+        this.dictionaryPaths = dictionaryPaths;
         this.parser = initializeDictionaryParser(locale);
         this.vowels = parser.getVowels();
         this.consonants = parser.getConsonants();
@@ -42,8 +45,7 @@ public class DictionaryParser {
         assert AVAILABLE_LOCALES.contains(locale);
 
         if (locale.equals(US)) {
-            // TODO: extract file path into configuration file
-            return new UsEnglishParser(objectMapper, "src/main/resources/dictionaries/en_us_dictionary.json");
+            return new UsEnglishParser(objectMapper, dictionaryPaths.get(locale));
         } else {
             throw new ParsingError(locale, "Locale %s is not supported");
         }

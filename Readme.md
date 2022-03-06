@@ -16,8 +16,10 @@ Plugins:
 * [surefire - 2.22.2](https://maven.apache.org/surefire/maven-surefire-plugin/index.html): Run the JUnit unit tests in an isolated classloader.
 
 ### Executing tests
-* Run all tests by executing `mvn clean test`.
-* 
+* Run all tests by executing `mvn surefire:test` or `mvn test`.
+* Test a single class by executing `mvn -Dtest=<class name without exension> test`.
+  * ex: `mvn -Dtest=TestHexLetters test`.
+* More information on how to execute single tests [here](https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html).
 
 ### Dependencies
 - [Jackson - 2.13.1](https://github.com/FasterXML/jackson).

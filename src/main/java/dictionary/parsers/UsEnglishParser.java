@@ -21,23 +21,23 @@ import static java.util.stream.Collectors.toList;
 public class UsEnglishParser implements LocaleParser {
 
     private final ObjectMapper objectMapper;
+    private final String dictionaryFilePath;
 
     private static final String VOWELS = "aeiou";
     private static final String CONSONANTS = "bcdfghjklmnpqrstvwxyz";
-    private static final String DICTIONARY_PATH = "src/main/resources/dictionaries/en_us_dictionary.json";
 
     @Override
     public List<DictionaryEntry> parseEntries() throws ParsingError {
         try {
-            Map<String, String> entries = objectMapper.readValue(new File(DICTIONARY_PATH), new TypeReference<>() {
+            Map<String, String> entries = objectMapper.readValue(new File(dictionaryFilePath), new TypeReference<>() {
             });
             return entries.keySet().stream().map(key -> new DictionaryEntry(key, entries.get(key))).collect(toList());
         } catch (IOException e) {
-            String message = format("An error occurred while parsing dictionary file for %s ", US);
+            String message = format("An IO error occurred while parsing dictionary file for %s", US);
             log.error(message, e);
             throw new ParsingError(US, message);
         } catch (Exception e) {
-            String message = format("An unknown error occurred while trying to parse entries for %s ", US);
+            String message = format("An unknown error occurred while trying to parse entries for %s", US);
             log.error(message, e);
             throw new ParsingError(US, message);
         }

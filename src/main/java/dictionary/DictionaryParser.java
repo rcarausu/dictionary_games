@@ -42,6 +42,7 @@ public class DictionaryParser {
         assert AVAILABLE_LOCALES.contains(locale);
 
         if (locale.equals(US)) {
+            // TODO: extract file path into configuration file
             return new UsEnglishParser(objectMapper, "src/main/resources/dictionaries/en_us_dictionary.json");
         } else {
             throw new ParsingError(locale, "Locale %s is not supported");

@@ -27,7 +27,7 @@ public class Dictionary {
         this.consonants = dictionaryParser.getConsonants();
     }
 
-    public boolean hasWord(String word) {
+    public boolean hasEntry(String word) {
         return entries.stream().anyMatch(e -> e.getWord().equals(word));
     }
 
@@ -35,6 +35,6 @@ public class Dictionary {
         return entries.stream()
                 .filter(e -> e.getWord().equals(word))
                 .findFirst()
-                .orElseThrow(() -> new EntryNotFoundError(format("Word %s not found in %s dictionary", word, locale)));
+                .orElseThrow(() -> new EntryNotFoundError(format("Word '%s' not found in %s dictionary", word, locale)));
     }
 }

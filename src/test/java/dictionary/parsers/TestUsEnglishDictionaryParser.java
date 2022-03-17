@@ -41,9 +41,7 @@ class TestUsEnglishDictionaryParser {
         String dictionaryFilePath = "";
 
         // when
-        Exception exception = assertThrows(ParsingError.class, () -> {
-            new UsEnglishParser(mapper, dictionaryFilePath).parseEntries();
-        });
+        Exception exception = assertThrows(ParsingError.class, new UsEnglishParser(mapper, dictionaryFilePath)::parseEntries);
 
         // then
         assertThat(exception.getClass()).isEqualTo(ParsingError.class);

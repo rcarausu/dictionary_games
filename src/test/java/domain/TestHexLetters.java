@@ -1,6 +1,6 @@
 package domain;
 
-import domain.games.HexLettersGame;
+import domain.games.HexLetters;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,12 +9,12 @@ import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class TestHexLettersGame {
+class TestHexLetters {
     @Test
     public void shouldThrowArrayIndexOutOfBoundsException_whenInstantiatingWithWrongSize() {
         // when
         ArrayIndexOutOfBoundsException exception = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
-            new HexLettersGame('a', Arrays.asList('d', 'e'), emptyList());
+            new HexLetters('a', Arrays.asList('d', 'e'), emptyList());
         });
 
         // then

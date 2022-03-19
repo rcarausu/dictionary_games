@@ -2,8 +2,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dictionary.Dictionary;
 import dictionary.DictionaryParser;
 import domain.exceptions.ParsingError;
-import domain.games.HexLettersGame;
-import games.HexLetters;
+import domain.games.HexLetters;
+import games.HexLettersCreator;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
@@ -20,10 +20,10 @@ public class Main {
             dictionaryPaths.put(Locale.US, "src/main/resources/dictionaries/en_us_dictionary.json");
             Dictionary dictionary = new Dictionary(new DictionaryParser(new ObjectMapper(), Locale.US, dictionaryPaths));
 
-            HexLettersGame hexLettersGame = new HexLetters(dictionary).create();
+            HexLetters hexLetters = new HexLettersCreator(dictionary).create();
 
             log.debug("New game created with main letter {}, extra letters {} and {} solutions: {}",
-                    hexLettersGame.getMainLetter(), hexLettersGame.getExtraLetters(), hexLettersGame.getSolutions().size(), hexLettersGame.getSolutions());
+                    hexLetters.getMainLetter(), hexLetters.getExtraLetters(), hexLetters.getSolutions().size(), hexLetters.getSolutions());
         } catch (ParsingError e) {
             e.printStackTrace();
         }

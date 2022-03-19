@@ -8,7 +8,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Getter
-public class HexLettersGame extends Game {
+public class HexLetters extends Game {
 
     public static final int MAX_EXTRA_LETTERS = 6;
     @NonNull
@@ -18,7 +18,7 @@ public class HexLettersGame extends Game {
     @NonNull
     private final List<String> solutions;
 
-    public HexLettersGame(char mainLetter, List<Character> extraLetters, List<String> solutions) {
+    public HexLetters(char mainLetter, List<Character> extraLetters, List<String> solutions) {
         if (extraLetters.size() != MAX_EXTRA_LETTERS) {
             throw new ArrayIndexOutOfBoundsException(format("Extra letters size must be %s", MAX_EXTRA_LETTERS));
         }

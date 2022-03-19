@@ -2,7 +2,7 @@ package games;
 
 import dictionary.Dictionary;
 import domain.DictionaryEntry;
-import domain.games.HexLettersGame;
+import domain.games.HexLetters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Random;
 
 import static java.lang.String.format;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
 
 
 @Slf4j
 @AllArgsConstructor
-public class HexLetters implements GameCreator {
+public class HexLettersCreator implements GameCreator {
     /* TODO LIST:
         - Randomize number of vowels between 2 and 3 and consonants between 5-4, depending on what number of vowels chosen.
         - Regenerate game if number of solutions is very low or very high (parametrize via configuration)
@@ -31,6 +32,8 @@ public class HexLetters implements GameCreator {
     private Dictionary dictionary;
 
     private List<String> generateSolutions(char mainLetter, List<Character> letters) {
+
+        log.info("Generating HexLetters solutions with main letter '{}' and letters '{}'", mainLetter, letters);
 
         List<Character> allLetters = new ArrayList<>(letters);
         allLetters.add(mainLetter);
@@ -56,7 +59,9 @@ public class HexLetters implements GameCreator {
                 .distinct()
                 .collect(toList());
 
-        log.info("Found {} solutions", solutions.size());
+        if (solutions.isEmpty()) {
+            log.info("Found 0 solutions, regenerating");
+        }
 
         return solutions;
     }
@@ -70,18 +75,26 @@ public class HexLetters implements GameCreator {
         return letters.subList(0, total);
     }
 
-    public HexLettersGame create() {
-        List<Character> letters = chooseLetters(dictionary.getConsonants(), MAX_CONSONANTS);
-        letters.addAll(chooseLetters(dictionary.getVowels(), MAX_VOWELS));
+    public HexLetters create() {
+        List<String> solutions = emptyList();
+        char mainLetter = 'a';
+        List<Character> letters = emptyList();
 
-        int mainLetterIndex = new Random().nextInt(letters.size());
-        char mainLetter = letters.get(mainLetterIndex);
+        while (solutions.isEmpty()) {
+            letters = chooseLetters(dictionary.getConsonants(), MAX_CONSONANTS);
+            letters.addAll(chooseLetters(dictionary.getVowels(), MAX_VOWELS));
 
-        letters.remove(mainLetterIndex);
+            int mainLetterIndex = new Random().nextInt(letters.size());
+            mainLetter = letters.get(mainLetterIndex);
 
-        log.info(format("Creating HexLetters game with main letter '%s' and letters '%s'", mainLetter, letters));
+            letters.remove(mainLetterIndex);
 
-        return new HexLettersGame(mainLetter, letters, generateSolutions(mainLetter, letters));
+            solutions = generateSolutions(mainLetter, letters);
+        }
+
+        log.info("Created HexLetters game with solutions '{}''", solutions);
+
+        return new HexLetters(mainLetter, letters, solutions);
     }
 
 }

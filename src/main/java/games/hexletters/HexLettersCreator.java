@@ -1,8 +1,9 @@
-package games;
+package games.hexletters;
 
 import dictionary.Dictionary;
 import domain.DictionaryEntry;
 import domain.games.HexLetters;
+import games.GameCreator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

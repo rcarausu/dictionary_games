@@ -5,13 +5,13 @@ import domain.DictionaryEntry;
 import domain.games.HexLetters;
 import games.GameCreator;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.shuffle;
 import static java.util.stream.Collectors.toList;
@@ -21,14 +21,31 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 public class HexLettersCreator implements GameCreator {
     /* TODO LIST:
-        - Randomize number of vowels between 2 and 3 and consonants between 5-4, depending on what number of vowels chosen.
         - Regenerate game if number of solutions is very low or very high (parametrize via configuration)
         - Parametrize minimum word size
      */
 
-    public static final int MAX_VOWELS = 2;
+    public static final int MIN_VOWELS = 2;
+    public static final int MAX_VOWELS = 3;
+
+    public static final int MIN_CONSONANTS = 4;
     public static final int MAX_CONSONANTS = 5;
+
     public static final int MINIMUM_WORD_SIZE = 3;
+
+    @Getter
+    @AllArgsConstructor
+    private static class LetterSizes {
+        private int numberOfVowels;
+        private int numberOfConsonants;
+    }
+
+    private static LetterSizes generateLetterSizes() {
+        if (Math.random() < 0.5) {
+            return new LetterSizes(MIN_VOWELS, MAX_CONSONANTS);
+        }
+        return new LetterSizes(MAX_VOWELS, MIN_CONSONANTS);
+    }
 
     private Dictionary dictionary;
 
@@ -82,7 +99,8 @@ public class HexLettersCreator implements GameCreator {
         List<Character> letters = emptyList();
 
         while (solutions.isEmpty()) {
-            letters = chooseLetters(dictionary.getConsonants(), MAX_CONSONANTS);
+            LetterSizes letterSizes = generateLetterSizes();
+            letters = chooseLetters(dictionary.getConsonants(), letterSizes.getNumberOfConsonants());
             letters.addAll(chooseLetters(dictionary.getVowels(), MAX_VOWELS));
 
             int mainLetterIndex = new Random().nextInt(letters.size());

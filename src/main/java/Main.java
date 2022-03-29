@@ -4,9 +4,9 @@ import dictionary.DictionaryParser;
 import domain.exceptions.ParsingError;
 import domain.games.HexLetters;
 import games.hexletters.HexLettersCreator;
+import games.hexletters.HexLettersGameManager;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        log.debug("Starting a new game");
+        System.out.println("Starting a new game");
         try {
             Map<Locale, String> dictionaryPaths = new HashMap<>();
             dictionaryPaths.put(Locale.US, "src/main/resources/dictionaries/en_us_dictionary.json");
@@ -26,16 +26,20 @@ public class Main {
 
             HexLetters hexLetters = new HexLettersCreator(dictionary).create();
 
-            log.debug("New game created with main letter {}, extra letters {} and {} solutions: {}",
-                    hexLetters.getMainLetter(), hexLetters.getExtraLetters(), hexLetters.getSolutions().size(), hexLetters.getSolutions());
+            HexLettersGameManager manager = new HexLettersGameManager(hexLetters, dictionary);
 
-            System.out.println("Write a solution");
-            String solution = scanner.nextLine();
-            if (hexLetters.getSolutions().contains(solution)) {
-                System.out.printf("Congrats! %s is a solution", solution);
-            } else {
-                System.out.printf("Sorry, %s is not a solution", solution);
+            while (manager.getSuccessfulTries().size() != manager.getSolutions().size()) {
+                System.out.println("Guess a word:");
+                String guess = scanner.nextLine();
+                if (manager.isSolution(guess)) {
+                    System.out.printf("Congrats! %s is a solution, with definitions: %s\n", guess, manager.getDefinitions(guess));
+                } else {
+                    System.out.printf("Sorry, %s is not a solution, try another one!\n", guess);
+                }
             }
+
+            System.out.println("CONGRATS! You have found all solutions :)");
+
         } catch (ParsingError e) {
             log.error("An error unknown error occurred", e);
         }

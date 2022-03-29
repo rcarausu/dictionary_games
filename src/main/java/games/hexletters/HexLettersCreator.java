@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.shuffle;
@@ -51,7 +52,7 @@ public class HexLettersCreator implements GameCreator {
 
     private List<String> generateSolutions(char mainLetter, List<Character> letters) {
 
-        log.info("Generating HexLetters solutions with main letter '{}' and letters '{}'", mainLetter, letters);
+        log.debug("Generating HexLetters solutions with main letter '{}' and letters '{}'", mainLetter, letters);
 
         List<Character> allLetters = new ArrayList<>(letters);
         allLetters.add(mainLetter);
@@ -78,7 +79,7 @@ public class HexLettersCreator implements GameCreator {
                 .collect(toList());
 
         if (solutions.isEmpty()) {
-            log.info("Found 0 solutions, regenerating");
+            log.debug("Found 0 solutions, regenerating");
         }
 
         return solutions;
@@ -101,7 +102,7 @@ public class HexLettersCreator implements GameCreator {
         while (solutions.isEmpty()) {
             LetterSizes letterSizes = generateLetterSizes();
             letters = chooseLetters(dictionary.getConsonants(), letterSizes.getNumberOfConsonants());
-            letters.addAll(chooseLetters(dictionary.getVowels(), MAX_VOWELS));
+            letters.addAll(chooseLetters(dictionary.getVowels(), letterSizes.getNumberOfVowels()));
 
             int mainLetterIndex = new Random().nextInt(letters.size());
             mainLetter = letters.get(mainLetterIndex);
@@ -111,9 +112,10 @@ public class HexLettersCreator implements GameCreator {
             solutions = generateSolutions(mainLetter, letters);
         }
 
-        log.info("Created HexLetters game with solutions '{}''", solutions);
+        String gameID = UUID.randomUUID().toString();
+        log.info("Created HexLetters game {} with solutions '{}''", gameID, solutions);
 
-        return new HexLetters(mainLetter, letters, solutions);
+        return new HexLetters(gameID, mainLetter, letters, solutions);
     }
 
 }

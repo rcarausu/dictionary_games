@@ -67,11 +67,16 @@ public class HexLettersCreator implements GameCreator {
                 )
                 .flatMap(List::stream)
                 .filter(word -> {
+                    if (!word.contains(String.valueOf(mainLetter))) {
+                        return false;
+                    }
+
                     for (int i = 0; i < word.length(); i++) {
-                        if (word.charAt(i) != mainLetter && !letters.contains(word.charAt(i))) {
+                        if (!allLetters.contains(word.charAt(i))) {
                             return false;
                         }
                     }
+
                     return true;
                 })
                 .filter(word -> word.length() >= MINIMUM_WORD_SIZE)
@@ -113,7 +118,7 @@ public class HexLettersCreator implements GameCreator {
         }
 
         String gameID = UUID.randomUUID().toString();
-        log.info("Created HexLetters game {} with solutions '{}''", gameID, solutions);
+        log.info("Created HexLetters game {} with {} solutions", gameID, solutions.size());
 
         return new HexLetters(gameID, mainLetter, letters, solutions);
     }

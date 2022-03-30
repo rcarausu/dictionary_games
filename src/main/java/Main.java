@@ -31,8 +31,9 @@ public class Main {
             while (manager.getSuccessfulTries().size() != manager.getSolutions().size()) {
                 System.out.println("Guess a word:");
                 String guess = scanner.nextLine();
+
                 if (manager.isSolution(guess)) {
-                    System.out.printf("Congrats! %s is a solution, with definitions: %s\n", guess, manager.getDefinitions(guess));
+                    System.out.printf("Congrats! %s is a solution. Found %s of %s\n", guess, manager.getSuccessfulTries().size(), manager.getSolutions().size());
                 } else {
                     System.out.printf("Sorry, %s is not a solution, try another one!\n", guess);
                 }

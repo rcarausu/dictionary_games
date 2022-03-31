@@ -118,7 +118,7 @@ public class HexLettersCreator implements GameCreator {
         }
 
         String gameID = UUID.randomUUID().toString();
-        log.info("Created HexLetters game {} with {} solutions", gameID, solutions.size());
+        log.info("Created HexLetters game {} with {} solutions, [{}]", gameID, solutions.size(), solutions);
 
         return new HexLetters(gameID, mainLetter, letters, solutions);
     }

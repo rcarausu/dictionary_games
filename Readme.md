@@ -18,7 +18,7 @@ Plugins:
 ### Executing tests
 * Run all tests by executing `mvn surefire:test` or `mvn test`.
 * Test a single class by executing `mvn -Dtest=<class name without exension> test`.
-  * ex: `mvn -Dtest=TestHexLettersCreator test`.
+  * ex: `mvn -Dtest=TestHexLettersBuilder test`.
 * More information on how to execute single tests [here](https://maven.apache.org/surefire/maven-surefire-plugin/examples/single-test.html).
 
 ### Dependencies

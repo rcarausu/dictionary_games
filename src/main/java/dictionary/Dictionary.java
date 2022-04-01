@@ -10,21 +10,19 @@ import java.util.Locale;
 
 import static java.lang.String.format;
 
+@Getter
 public class Dictionary {
 
     private final Locale locale;
-    @Getter
-    private final List<DictionaryEntry> entries;
-    @Getter
     private final String vowels;
-    @Getter
     private final String consonants;
+    private final List<DictionaryEntry> entries;
 
-    public Dictionary(DictionaryParser dictionaryParser) throws ParsingError {
-        this.locale = dictionaryParser.getLocale();
-        this.entries = dictionaryParser.retrieveEntries();
-        this.vowels = dictionaryParser.getVowels();
-        this.consonants = dictionaryParser.getConsonants();
+    public Dictionary(DictionaryParser parser) throws ParsingError {
+        this.locale = parser.getLocale();
+        this.consonants = parser.getConsonants();
+        this.vowels = parser.getVowels();
+        this.entries = parser.parseEntries();
     }
 
     public boolean hasEntry(String word) {

@@ -21,7 +21,7 @@ class TestDictionaryParser {
         DictionaryParser parser = new DictionaryParser(mapper, Locale.US, dictionaryPaths);
 
         // then
-        assertThat(parser.retrieveEntries().size()).isEqualTo(50);
+        assertThat(parser.parseEntries().size()).isEqualTo(50);
         assertThat(parser.getConsonants()).isEqualTo("bcdfghjklmnpqrstvwxyz");
         assertThat(parser.getVowels()).isEqualTo("aeiou");
         assertThat(parser.getLocale()).isEqualTo(Locale.US);

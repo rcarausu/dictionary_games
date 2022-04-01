@@ -19,7 +19,6 @@ public class DictionaryParser {
 
     @Getter
     private final Locale locale;
-
     @Getter
     private final String vowels;
     @Getter
@@ -51,7 +50,7 @@ public class DictionaryParser {
         }
     }
 
-    public List<DictionaryEntry> retrieveEntries() throws ParsingError {
+    public List<DictionaryEntry> parseEntries() throws ParsingError {
         return parser.parseEntries();
     }
 }

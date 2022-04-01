@@ -3,7 +3,7 @@ import dictionary.Dictionary;
 import dictionary.DictionaryParser;
 import domain.exceptions.ParsingError;
 import domain.games.HexLetters;
-import games.hexletters.HexLettersCreator;
+import games.hexletters.HexLettersBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,9 +13,8 @@ import java.util.Locale;
 
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class TestHexLettersCreator {
+class TestHexLettersBuilder {
 
     private AutoCloseable closeable;
 
@@ -36,7 +35,7 @@ class TestHexLettersCreator {
                 new ObjectMapper(), Locale.US, singletonMap(Locale.US, "src/test/resources/en_us_dictionary.json")
         ));
 
-        HexLetters game = new HexLettersCreator(dictionary).create();
+        HexLetters game = new HexLettersBuilder().from(dictionary).build();
 
         // then
         assertThat(game.getSolutions().size()).isNotZero();

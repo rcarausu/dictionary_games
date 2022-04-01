@@ -38,7 +38,7 @@ class TestDictionary {
     @Test
     public void shouldReturnTrue_whenDictionaryHasEntry() throws ParsingError {
         // when
-        when(parser.retrieveEntries()).thenReturn(singletonList(new DictionaryEntry("blah", "bleh")));
+        when(parser.parseEntries()).thenReturn(singletonList(new DictionaryEntry("blah", "bleh")));
 
         // then
         assertThat(new Dictionary(parser).hasEntry("blah")).isTrue();
@@ -47,7 +47,7 @@ class TestDictionary {
     @Test
     public void shouldReturnFalse_whenDictionaryDoesNotHaveEntry() throws ParsingError {
         // when
-        when(parser.retrieveEntries()).thenReturn(emptyList());
+        when(parser.parseEntries()).thenReturn(emptyList());
 
         // then
         assertThat(new Dictionary(parser).hasEntry("blah")).isFalse();
@@ -56,7 +56,7 @@ class TestDictionary {
     @Test
     public void shouldReturnEntry() throws ParsingError, EntryNotFoundError {
         // when
-        when(parser.retrieveEntries()).thenReturn(singletonList(ENTRY));
+        when(parser.parseEntries()).thenReturn(singletonList(ENTRY));
 
         // then
         assertThat(new Dictionary(parser).getEntry("blah")).isEqualTo(ENTRY);
@@ -65,7 +65,7 @@ class TestDictionary {
     @Test
     public void shouldThrowEntryNotFound() throws ParsingError {
         // when
-        when(parser.retrieveEntries()).thenReturn(emptyList());
+        when(parser.parseEntries()).thenReturn(emptyList());
         when(parser.getLocale()).thenReturn(Locale.US);
 
         Exception exception = assertThrows(EntryNotFoundError.class, () -> new Dictionary(parser).getEntry("blep"));

@@ -1,10 +1,10 @@
 package domain.games;
 
+import dictionary.Dictionary;
 import lombok.Getter;
 import lombok.NonNull;
 
 import java.util.List;
-import java.util.UUID;
 
 import static java.lang.String.format;
 
@@ -17,18 +17,22 @@ public class HexLetters extends Game {
     private final String id;
 
     @NonNull
+    private final Dictionary dictionary;
+
+    @NonNull
     private final char mainLetter;
     @NonNull
     private final List<Character> extraLetters;
     @NonNull
     private final List<String> solutions;
 
-    public HexLetters(String id, char mainLetter, List<Character> extraLetters, List<String> solutions) {
+    public HexLetters(String id, Dictionary dictionary, char mainLetter, List<Character> extraLetters, List<String> solutions) {
         if (extraLetters.size() != MAX_EXTRA_LETTERS) {
             throw new ArrayIndexOutOfBoundsException(format("Extra letters size must be %s", MAX_EXTRA_LETTERS));
         }
 
         this.id = id;
+        this.dictionary = dictionary;
         this.mainLetter = mainLetter;
         this.extraLetters = extraLetters;
         this.solutions = solutions;

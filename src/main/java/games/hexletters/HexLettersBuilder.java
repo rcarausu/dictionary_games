@@ -46,7 +46,7 @@ public class HexLettersBuilder extends HexLettersBuilderCompanion {
         }
 
         String gameID = UUID.randomUUID().toString();
-        log.info("Created HexLetters game {} with {} solutions, [{}]", gameID, solutions.size(), solutions);
+        log.info("Created HexLetters game {} with {} solutions {}", gameID, solutions.size(), solutions);
 
         return new HexLetters(gameID, dictionary, mainLetter, letters, solutions);
     }

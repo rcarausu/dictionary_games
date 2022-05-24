@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Starting a new game");
+        log.info("Starting a new game");
         try {
             // TODO: move the generation of this map to a configuration file/class
             Map<Locale, String> dictionaryPaths = new HashMap<>();
@@ -31,17 +31,17 @@ public class Main {
             HexLettersGameManager manager = new HexLettersGameManager(hexLetters);
 
             while (manager.getSuccessfulTries().size() != manager.getGame().getSolutions().size()) {
-                System.out.println("Guess a word:");
+                log.info("Guess a word:");
                 String guess = scanner.nextLine();
 
                 if (manager.isSolution(guess)) {
-                    System.out.printf("Congrats! %s is a solution. Found %s of %s\n", guess, manager.getSuccessfulTries().size(), manager.getGame().getSolutions().size());
+                    log.info("Congrats! {} is a solution. Found {} of {}", guess, manager.getSuccessfulTries().size(), manager.getGame().getSolutions().size());
                 } else {
-                    System.out.printf("Sorry, %s is not a solution, try another one!\n", guess);
+                    log.info("Sorry, {} is not a solution, try another one!", guess);
                 }
             }
 
-            System.out.println("CONGRATS! You have found all solutions :)");
+            log.info("CONGRATS! You have found all solutions :)");
 
         } catch (ParsingError e) {
             log.error("An error unknown error occurred", e);
